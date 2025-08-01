@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Include app database -->
+    <include domain="database" path="planner_database" />
+    <include domain="database" path="planner_database-shm" />
+    <include domain="database" path="planner_database-wal" />
+    
+    <!-- Include shared preferences -->
+    <include domain="sharedpref" path="user_preferences.xml" />
+    
+    <!-- Include backup files -->
+    <include domain="file" path="backups/" />
+    
+    <!-- Exclude temporary files -->
+    <exclude domain="file" path="temp/" />
+    <exclude domain="cache" />
+</full-backup-content>
