@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Reminder - Offline Meal Planning & Task Management</title>
+    <meta name="description" content="Complete offline Android app for meal planning, task management, and daily scheduling with zero internet dependency.">
+    <meta name="theme-color" content="#6200EE">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzYyMDBFRSIvPgo8cGF0aCBkPSJNOCA4aDEydjJIOHptMCA0aDEwdjJIOHptMCA0aDh2Mkg4eiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .download-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: #6200EE;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(98, 0, 238, 0.3);
+        }
+
+        .download-btn:hover {
+            background: #3700B3;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(98, 0, 238, 0.4);
+        }
+
+        .download-btn.secondary {
+            background: #03DAC6;
+            color: #000;
+            box-shadow: 0 4px 15px rgba(3, 218, 198, 0.3);
+        }
+
+        .download-btn.secondary:hover {
+            background: #018786;
+            color: white;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #6200EE;
+        }
+
+        .feature p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .tech-specs {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .tech-specs h2 {
+            color: #6200EE;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .spec-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #6200EE;
+        }
+
+        .spec-item strong {
+            color: #6200EE;
+        }
+
+        .github-link {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: #24292e;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .github-btn:hover {
+            background: #1a1e22;
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: rgba(255,255,255,0.8);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .download-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>📱 Daily Reminder</h1>
+            <p>Complete offline Android app for meal planning, task management, and daily scheduling with zero internet dependency</p>
+        </div>
+
+        <div class="download-section">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #6200EE;">Download APK</h2>
+            <div class="download-buttons">
+                <a href="./app-release.apk" class="download-btn" download>
+                    📱 Download APK (Release)
+                </a>
+                <a href="./app-debug.apk" class="download-btn secondary" download>
+                    🔧 Download APK (Debug)
+                </a>
+            </div>
+            <p style="text-align: center; color: #666; font-size: 0.9rem;">
+                <strong>Note:</strong> Enable "Install from unknown sources" in your Android settings to install the APK
+            </p>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🗓️</div>
+                <h3>Interactive Calendar</h3>
+                <p>Month, week, and day views with gesture navigation. Visual indicators for current day, events, and appointments with multi-day event support.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🍽️</div>
+                <h3>Meal Planning</h3>
+                <p>Time-specific meal scheduling with recipe integration, ingredient tracking, grocery list generation, and nutritional information display.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">✅</div>
+                <h3>Task Management</h3>
+                <p>11 task categories including cooking, cleaning, medical appointments, and more. Priority levels, duration estimation, and recurring task scheduling.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🔔</div>
+                <h3>Smart Notifications</h3>
+                <p>Customizable toast notifications, alarm-style reminders with sound/vibration, snooze functionality, and notification grouping by category.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h3>Privacy & Security</h3>
+                <p>AES-256 encrypted local storage, zero internet permissions, no data collection, and GDPR/CCPA compliant by design.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">♿</div>
+                <h3>Accessibility</h3>
+                <p>Full TalkBack support, large text scaling up to 200%, high contrast mode, colorblind-friendly palette, and haptic feedback.</p>
+            </div>
+        </div>
+
+        <div class="tech-specs">
+            <h2>📋 Technical Specifications</h2>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <strong>Platform:</strong> Android 8.0+ (API 26)
+                </div>
+                <div class="spec-item">
+                    <strong>Architecture:</strong> Clean Architecture + MVVM
+                </div>
+                <div class="spec-item">
+                    <strong>UI Framework:</strong> Jetpack Compose + Material Design 3
+                </div>
+                <div class="spec-item">
+                    <strong>Database:</strong> Room + SQLite with AES-256 encryption
+                </div>
+                <div class="spec-item">
+                    <strong>Language:</strong> Kotlin with Coroutines
+                </div>
+                <div class="spec-item">
+                    <strong>Dependency Injection:</strong> Hilt
+                </div>
+                <div class="spec-item">
+                    <strong>Background Tasks:</strong> WorkManager + AlarmManager
+                </div>
+                <div class="spec-item">
+                    <strong>Storage:</strong> Internal app storage only (offline-first)
+                </div>
+            </div>
+        </div>
+
+        <div class="github-link">
+            <a href="https://github.com/ToasterBaptism/Daily-reminder" class="github-btn" target="_blank">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                View Source Code on GitHub
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Daily Reminder. Open source Android app built with ❤️</p>
+            <p>Offline-first • Privacy-focused • Accessibility-compliant</p>
+        </div>
+    </div>
+
+    <script>
+        // Add download tracking
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const filename = this.getAttribute('href');
+                console.log(`Download started: ${filename}`);
+                
+                // Show download message
+                const message = document.createElement('div');
+                message.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #4CAF50;
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    z-index: 1000;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                `;
+                message.textContent = 'Download started! Check your downloads folder.';
+                document.body.appendChild(message);
+                
+                setTimeout(() => {
+                    message.remove();
+                }, 3000);
+            });
+        });
+
+        // Add smooth scrolling for any anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
