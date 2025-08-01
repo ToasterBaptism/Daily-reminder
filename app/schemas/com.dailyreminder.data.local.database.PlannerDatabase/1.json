@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9a3d5d2f30e864617122ed6e0ee28a5e",
+    "identityHash": "5cfb125d24733a72e98d687993e9ba11",
     "entities": [
       {
         "tableName": "events",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `startDateTime` TEXT NOT NULL, `endDateTime` TEXT, `category` TEXT NOT NULL, `priority` TEXT NOT NULL, `recurrence` TEXT NOT NULL, `isCompleted` INTEGER NOT NULL, `notificationEnabled` INTEGER NOT NULL, `notificationMinutesBefore` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `startDateTime` TEXT NOT NULL, `endDateTime` TEXT NOT NULL, `category` TEXT NOT NULL, `priority` TEXT NOT NULL, `isAllDay` INTEGER NOT NULL, `recurrence` TEXT NOT NULL, `reminderMinutes` INTEGER NOT NULL, `location` TEXT NOT NULL, `isCompleted` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -36,7 +36,7 @@
             "fieldPath": "endDateTime",
             "columnName": "endDateTime",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "category",
@@ -51,26 +51,32 @@
             "notNull": true
           },
           {
+            "fieldPath": "isAllDay",
+            "columnName": "isAllDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "recurrence",
             "columnName": "recurrence",
             "affinity": "TEXT",
             "notNull": true
           },
           {
+            "fieldPath": "reminderMinutes",
+            "columnName": "reminderMinutes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "isCompleted",
             "columnName": "isCompleted",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "notificationEnabled",
-            "columnName": "notificationEnabled",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "notificationMinutesBefore",
-            "columnName": "notificationMinutesBefore",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -98,7 +104,7 @@
       },
       {
         "tableName": "meals",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `mealType` TEXT NOT NULL, `scheduledDateTime` TEXT NOT NULL, `recipe` TEXT, `ingredients` TEXT NOT NULL, `preparationTimeMinutes` INTEGER NOT NULL, `cookingTimeMinutes` INTEGER NOT NULL, `servings` INTEGER NOT NULL, `nutritionalInfo` TEXT, `dietaryRestrictions` TEXT NOT NULL, `notes` TEXT NOT NULL, `isCompleted` INTEGER NOT NULL, `notificationEnabled` INTEGER NOT NULL, `notificationMinutesBefore` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `mealType` TEXT NOT NULL, `scheduledDateTime` TEXT NOT NULL, `preparationTimeMinutes` INTEGER NOT NULL, `servings` INTEGER NOT NULL, `ingredients` TEXT NOT NULL, `instructions` TEXT NOT NULL, `calories` INTEGER NOT NULL, `protein` REAL NOT NULL, `carbohydrates` REAL NOT NULL, `fat` REAL NOT NULL, `fiber` REAL NOT NULL, `sugar` REAL NOT NULL, `sodium` REAL NOT NULL, `dietaryTags` TEXT NOT NULL, `reminderMinutes` INTEGER NOT NULL, `isCompleted` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -109,6 +115,12 @@
           {
             "fieldPath": "name",
             "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -125,26 +137,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "recipe",
-            "columnName": "recipe",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "ingredients",
-            "columnName": "ingredients",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "preparationTimeMinutes",
             "columnName": "preparationTimeMinutes",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "cookingTimeMinutes",
-            "columnName": "cookingTimeMinutes",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -155,38 +149,74 @@
             "notNull": true
           },
           {
-            "fieldPath": "nutritionalInfo",
-            "columnName": "nutritionalInfo",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "dietaryRestrictions",
-            "columnName": "dietaryRestrictions",
+            "fieldPath": "ingredients",
+            "columnName": "ingredients",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "notes",
-            "columnName": "notes",
+            "fieldPath": "instructions",
+            "columnName": "instructions",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "calories",
+            "columnName": "calories",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "protein",
+            "columnName": "protein",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "carbohydrates",
+            "columnName": "carbohydrates",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fat",
+            "columnName": "fat",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fiber",
+            "columnName": "fiber",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sugar",
+            "columnName": "sugar",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sodium",
+            "columnName": "sodium",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dietaryTags",
+            "columnName": "dietaryTags",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderMinutes",
+            "columnName": "reminderMinutes",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "isCompleted",
             "columnName": "isCompleted",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "notificationEnabled",
-            "columnName": "notificationEnabled",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "notificationMinutesBefore",
-            "columnName": "notificationMinutesBefore",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -214,7 +244,7 @@
       },
       {
         "tableName": "tasks",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `category` TEXT NOT NULL, `priority` TEXT NOT NULL, `dueDateTime` TEXT, `estimatedDurationMinutes` INTEGER NOT NULL, `isCompleted` INTEGER NOT NULL, `completedAt` TEXT, `recurrence` TEXT NOT NULL, `subtasks` TEXT NOT NULL, `tags` TEXT NOT NULL, `notificationEnabled` INTEGER NOT NULL, `notificationMinutesBefore` INTEGER NOT NULL, `progress` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `category` TEXT NOT NULL, `priority` TEXT NOT NULL, `dueDateTime` TEXT, `estimatedDurationMinutes` INTEGER NOT NULL, `recurrence` TEXT NOT NULL, `reminderMinutes` INTEGER NOT NULL, `isCompleted` INTEGER NOT NULL, `completedAt` TEXT, `subtasks` TEXT NOT NULL, `tags` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -259,6 +289,18 @@
             "notNull": true
           },
           {
+            "fieldPath": "recurrence",
+            "columnName": "recurrence",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderMinutes",
+            "columnName": "reminderMinutes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "isCompleted",
             "columnName": "isCompleted",
             "affinity": "INTEGER",
@@ -271,12 +313,6 @@
             "notNull": false
           },
           {
-            "fieldPath": "recurrence",
-            "columnName": "recurrence",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "subtasks",
             "columnName": "subtasks",
             "affinity": "TEXT",
@@ -286,24 +322,6 @@
             "fieldPath": "tags",
             "columnName": "tags",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "notificationEnabled",
-            "columnName": "notificationEnabled",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "notificationMinutesBefore",
-            "columnName": "notificationMinutesBefore",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "progress",
-            "columnName": "progress",
-            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -330,7 +348,7 @@
       },
       {
         "tableName": "notifications",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `message` TEXT NOT NULL, `type` TEXT NOT NULL, `relatedItemId` INTEGER NOT NULL, `scheduledDateTime` TEXT NOT NULL, `isDelivered` INTEGER NOT NULL, `deliveredAt` TEXT, `isDismissed` INTEGER NOT NULL, `dismissedAt` TEXT, `isSnoozed` INTEGER NOT NULL, `snoozeUntil` TEXT, `soundEnabled` INTEGER NOT NULL, `vibrationEnabled` INTEGER NOT NULL, `ledEnabled` INTEGER NOT NULL, `priority` TEXT NOT NULL, `actions` TEXT NOT NULL, `createdAt` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `message` TEXT NOT NULL, `type` TEXT NOT NULL, `relatedItemId` INTEGER NOT NULL, `scheduledDateTime` TEXT NOT NULL, `isDelivered` INTEGER NOT NULL, `isDismissed` INTEGER NOT NULL, `soundEnabled` INTEGER NOT NULL, `vibrationEnabled` INTEGER NOT NULL, `snoozeCount` INTEGER NOT NULL, `maxSnoozeCount` INTEGER NOT NULL, `snoozeIntervalMinutes` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `deliveredAt` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -375,34 +393,10 @@
             "notNull": true
           },
           {
-            "fieldPath": "deliveredAt",
-            "columnName": "deliveredAt",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
             "fieldPath": "isDismissed",
             "columnName": "isDismissed",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "dismissedAt",
-            "columnName": "dismissedAt",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "isSnoozed",
-            "columnName": "isSnoozed",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "snoozeUntil",
-            "columnName": "snoozeUntil",
-            "affinity": "TEXT",
-            "notNull": false
           },
           {
             "fieldPath": "soundEnabled",
@@ -417,21 +411,21 @@
             "notNull": true
           },
           {
-            "fieldPath": "ledEnabled",
-            "columnName": "ledEnabled",
+            "fieldPath": "snoozeCount",
+            "columnName": "snoozeCount",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "priority",
-            "columnName": "priority",
-            "affinity": "TEXT",
+            "fieldPath": "maxSnoozeCount",
+            "columnName": "maxSnoozeCount",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "actions",
-            "columnName": "actions",
-            "affinity": "TEXT",
+            "fieldPath": "snoozeIntervalMinutes",
+            "columnName": "snoozeIntervalMinutes",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -439,6 +433,12 @@
             "columnName": "createdAt",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "deliveredAt",
+            "columnName": "deliveredAt",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -454,7 +454,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9a3d5d2f30e864617122ed6e0ee28a5e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5cfb125d24733a72e98d687993e9ba11')"
     ]
   }
 }

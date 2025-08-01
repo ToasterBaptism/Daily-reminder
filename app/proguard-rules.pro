@@ -15,6 +15,12 @@
 -keepattributes *Annotation*
 -keep class com.google.gson.** { *; }
 
+# Keep kotlinx.serialization classes
+-keep class kotlinx.serialization.** { *; }
+-keep class kotlinx.datetime.serializers.** { *; }
+-keepattributes *Annotation*, InnerClasses
+-dontnote kotlinx.serialization.AnnotationsKt
+
 # Keep data classes used for serialization
 -keep class com.dailyreminder.data.model.** { *; }
 
